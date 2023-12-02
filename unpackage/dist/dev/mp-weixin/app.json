@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/task/task",
+    "pages/message/message"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#ffe4c4",
+    "backgroundColor": "#ffe4c4",
+    "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "backgroundColor": "#ffe4c4",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/icon/zhuye_normal.png",
+        "selectedIconPath": "static/icon/zhuye_pressed.png",
+        "text": "首页",
+        "iconfont": {
+          "text": "",
+          "selectedText": "",
+          "fontSize": "17px",
+          "color": "#000000",
+          "selectedColor": "#0000ff"
+        }
+      },
+      {
+        "pagePath": "pages/task/task",
+        "iconPath": "static/icon/news_normal.png",
+        "selectedIconPath": "static/icon/news_pressed.png",
+        "text": "任务"
+      },
+      {
+        "pagePath": "pages/message/message",
+        "iconPath": "static/icon/xiaoxi_normal.png",
+        "selectedIconPath": "static/icon/xiaoxi_pressed.png",
+        "text": "消息"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

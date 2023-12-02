@@ -1,0 +1,58 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
+			"path": "pages/task/task",
+			"style": {
+				"navigationBarTitleText": "任务",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/message/message",
+			"style": {
+				"navigationBarTitleText": "消息",
+				"enablePullDownRefresh": false
+			}
+		}
+	],
+	"tabBar": {
+		"backgroundColor": "#ffe4c4",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"iconPath": "static/icon/zhuye_normal.png",
+			"selectedIconPath": "static/icon/zhuye_pressed.png",
+			"text": "首页",
+			"iconfont": { // 优先级高于 iconPath，该属性依赖 tabbar 根节点的 iconfontSrc
+				"text": "\ue102",
+				"selectedText": "\ue103",
+				"fontSize": "17px",
+				"color": "#000000",
+				"selectedColor": "#0000ff"
+			}
+		}, {
+			"pagePath": "pages/task/task",
+			"iconPath": "static/icon/news_normal.png",
+			"selectedIconPath": "static/icon/news_pressed.png",
+			"text": "任务"
+		}, {
+			"pagePath": "pages/message/message",
+			"iconPath": "static/icon/xiaoxi_normal.png",
+			"selectedIconPath": "static/icon/xiaoxi_pressed.png",
+			"text": "消息"
+		}]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#ffe4c4",
+		"backgroundColor": "#ffe4c4",
+		"navigationStyle": "custom"
+	},
+	"uniIdRouter": {}
+}
