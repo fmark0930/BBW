@@ -32,6 +32,13 @@
   width: 70rpx;
   height: 70rpx;
 }
+.uni_drawer .uni_drawer_head {
+  margin-top: 100rpx;
+}
+.uni_drawer .uni_drawer_person_image {
+  width: 150rpx;
+  height: 150rpx;
+}
 .scroll_index {
   background: #ffe4c4;
   height: 100vh;

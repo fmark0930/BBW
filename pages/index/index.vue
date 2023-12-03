@@ -1,7 +1,12 @@
 <template>
-	<view class="Navigation_bar">
+	<view class="Navigation_bar" @click="showDrawer('showLeft')">
 		<image class="person_image" :src="person_image"></image>
 	</view>
+	<uni-drawer class="uni_drawer" ref="showLeft" mode="left" :width="320" @change="change($event,'showLeft')">
+		<view class="uni_drawer_head">
+			<image class="uni_drawer_person_image" :src="person_image"></image>
+		</view>
+	</uni-drawer>
 	<scroll-view scroll-y class="scroll_index">
 		<view>
 			<!-- Swiper Section -->
@@ -31,14 +36,27 @@
 
 <script setup>
 	import {
-		onMounted
+		onMounted,
+		ref,
+		toRefs
 	} from 'vue';
 
-	onMounted(() => {
-		// 在页面显示时设置导航栏按钮
-		console.log("11111111")
-	});
 	const person_image = "/static/person/touxiang.png"
+
+	const showLeft = ref(false)
+
+	onMounted(() => {
+	  console.log(showLeft.value); // 直接通过 ref 获取值
+	});
+	
+	const showDrawer = () => {
+	  if (showLeft.value) {
+	    showLeft.value.open(); // 调用 抽屉的 open 方法
+	  }
+	};
+	const change = (e, type) => {
+		console.log((type === 'showLeft' ? '左窗口' : '右窗口') + (e ? '打开' : '关闭'));
+	}
 
 	const imageList = [ //轮播图路径
 		'/static/banners/banner1.jpg',
@@ -51,12 +69,23 @@
 
 <style lang="scss">
 	.Navigation_bar {
-	background-color: #ffe4c4;
-		.person_image{
+		background-color: #ffe4c4;
+
+		.person_image {
 			margin-top: 100rpx;
 			margin-left: 20rpx;
 			width: 70rpx;
 			height: 70rpx;
+		}
+	}
+	
+	.uni_drawer{
+		.uni_drawer_head{
+			margin-top: 100rpx;
+		}
+		.uni_drawer_person_image{
+			width: 150rpx;
+			height: 150rpx;
 		}
 	}
 

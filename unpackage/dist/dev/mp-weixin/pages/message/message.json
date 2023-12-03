@@ -1,5 +1,8 @@
 {
   "navigationBarTitleText": "消息",
   "enablePullDownRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "uni-drawer": "../../uni_modules/uni-drawer/components/uni-drawer/uni-drawer",
+    "uni-section": "../../uni_modules/uni-section/components/uni-section/uni-section"
+  }
 }
