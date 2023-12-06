@@ -5,8 +5,10 @@
 	<uni-drawer class="uni_drawer" ref="showLeft" mode="left" :width="320" @change="change($event,'showLeft')">
 		<view class="uni_drawer_head">
 			<image class="uni_drawer_person_image" :src="person_image"></image>
+			<button   @click="UserLogin" open-type="getUserInfo" getuserinfo="test">测试按钮</button>
 		</view>
 	</uni-drawer>
+	
 	<scroll-view scroll-y class="scroll_index">
 		<view>
 			<!-- Swiper Section -->
@@ -41,18 +43,77 @@
 		toRefs
 	} from 'vue';
 
-	const person_image = "/static/person/touxiang.png"
+	onMounted(() => {
 
+	});
 	const showLeft = ref(false)
 
-	onMounted(() => {
-	  console.log(showLeft.value); // 直接通过 ref 获取值
-	});
-	
+	let person_image = "/static/person/touxiang.png"
+
+	const test = (e) => {
+		uni.getUserInfo({
+			success: (res) => {
+				this.userInfo = res.userInfo;
+				console.log(this.userInfo);
+			},
+			fail: () => {
+				console.log("未授权");
+			}
+		})
+
+	}
+
+
+
+	const UserLogin = async () => {
+
+		const userinfo = await uni.getUserProfile({
+			desc: "获取用户信息",
+
+			success(res) {
+				person_image = res.userInfo.avatarUrl
+				console.log(person_image)
+				console.log("获取成功111", res.userInfo);
+			},
+		});
+
+		const {
+			code
+		} = await uni.login({
+			provider: 'weixin'
+		});
+		// 发送 code 到后端服务器进行登录验证
+		// 这里可以使用uni.request或者axios等发送请求，将code发送到后端
+		// 后端根据code获取用户的openid等信息，并进行登录处理
+		// 示例使用uni.request发送请求
+		const res = await uni.request({
+			url: 'http://localhost:8080/user/login', // 替换成你的后端登录接口地址
+			method: 'GET',
+			data: {
+				code: code,
+				// 其他参数根据你的后端需求添加
+			},
+		});
+
+		// 处理后端返回的数据
+		const {
+			data
+		} = res;
+		if (data.msg == "success") {
+			// 登录成功，获取用户信息，存储到本地或全局状态管理中
+			const userInfo = data.data;
+			console.log('用户信息：', userInfo);
+			// 这里可以将用户信息保存到本地存储或全局状态管理，以便其他页面使用
+		} else {
+			// 登录失败，处理失败逻辑
+			console.error('登录失败：', data.message);
+		}
+	};
+
 	const showDrawer = () => {
-	  if (showLeft.value) {
-	    showLeft.value.open(); // 调用 抽屉的 open 方法
-	  }
+		if (showLeft.value) {
+			showLeft.value.open(); // 调用 抽屉的 open 方法
+		}
 	};
 	const change = (e, type) => {
 		console.log((type === 'showLeft' ? '左窗口' : '右窗口') + (e ? '打开' : '关闭'));
@@ -78,12 +139,13 @@
 			height: 70rpx;
 		}
 	}
-	
-	.uni_drawer{
-		.uni_drawer_head{
+
+	.uni_drawer {
+		.uni_drawer_head {
 			margin-top: 100rpx;
 		}
-		.uni_drawer_person_image{
+
+		.uni_drawer_person_image {
 			width: 150rpx;
 			height: 150rpx;
 		}

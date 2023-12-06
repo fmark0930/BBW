@@ -11,11 +11,43 @@ if (!Math) {
 const _sfc_main = {
   __name: "index",
   setup(__props) {
-    const person_image = "/static/person/touxiang.png";
-    const showLeft = common_vendor.ref(false);
     common_vendor.onMounted(() => {
-      console.log(showLeft.value);
     });
+    const showLeft = common_vendor.ref(false);
+    let person_image = "/static/person/touxiang.png";
+    const UserLogin = async () => {
+      await common_vendor.index.getUserProfile({
+        desc: "获取用户信息",
+        success(res2) {
+          person_image = res2.userInfo.avatarUrl;
+          console.log(person_image);
+          console.log("获取成功111", res2.userInfo);
+        }
+      });
+      const {
+        code
+      } = await common_vendor.index.login({
+        provider: "weixin"
+      });
+      const res = await common_vendor.index.request({
+        url: "http://localhost:8080/user/login",
+        // 替换成你的后端登录接口地址
+        method: "GET",
+        data: {
+          code
+          // 其他参数根据你的后端需求添加
+        }
+      });
+      const {
+        data
+      } = res;
+      if (data.msg == "success") {
+        const userInfo = data.data;
+        console.log("用户信息：", userInfo);
+      } else {
+        console.error("登录失败：", data.message);
+      }
+    };
     const showDrawer = () => {
       if (showLeft.value) {
         showLeft.value.open();
@@ -34,18 +66,19 @@ const _sfc_main = {
     ];
     return (_ctx, _cache) => {
       return {
-        a: person_image,
+        a: common_vendor.unref(person_image),
         b: common_vendor.o(($event) => showDrawer()),
-        c: person_image,
-        d: common_vendor.sr(showLeft, "6a3e4181-0", {
+        c: common_vendor.unref(person_image),
+        d: common_vendor.o(UserLogin),
+        e: common_vendor.sr(showLeft, "6a3e4181-0", {
           "k": "showLeft"
         }),
-        e: common_vendor.o(($event) => change($event, "showLeft")),
-        f: common_vendor.p({
+        f: common_vendor.o(($event) => change($event, "showLeft")),
+        g: common_vendor.p({
           mode: "left",
           width: 320
         }),
-        g: common_vendor.f(imageList, (image, index, i0) => {
+        h: common_vendor.f(imageList, (image, index, i0) => {
           return {
             a: image,
             b: index
