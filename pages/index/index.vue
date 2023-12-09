@@ -79,39 +79,79 @@
 			});
 		});
 	}
-	const test =(e) =>{
-		console.log(e)
-	}
+	const test = (e) => {
+			const getphonenumber = new Promise((resolve, reject) => {
+				uni.login({
+					provider: 'weixin',
+					success: (res) => {
+						resolve(res)
+					}
+				});
+			}).then((login_res) => {
+				uni.request({
+					url: 'http://localhost:8080/user/login', // 替换成你的后端登录接口地址
+					method: 'GET',
+					data: {
+						code: login_res.code,
+						// 其他参数根据你的后端需求添加
+					},
+					success: (res) => {
+						if (res.data.msg == "success") {
+							// 登录成功，获取用户信息，存储到本地或全局状态管理中
+							const userInfo = res.data.data;
+							console.log('登录信息：', userInfo);
+							return res
+							// 这里可以将用户信息保存到本地存储或全局状态管理，以便其他页面使用
+						} else {
+							// 登录失败，处理失败逻辑
+							console.error('登录失败：', data.message);
+						}
+					}
+				});
+			}).then((res) => {
+					uni.request({
+							url: 'http://localhost:8080/user/getPhone', // 替换成你的后端登录接口地址
+							method: 'GET',
+							data: {
+								code: e.detail.code
+								// 其他参数根据你的后端需求添加
+							},
+							success(res) {
+								console.log(res)
+							}
+						})
+					})
+			}
 
 
-	const getUserProfile = async () => {
+			const getUserProfile = async () => {
 
-		const userinfo = await uni.getUserProfile({
-			desc: "获取用户信息",
-			success(res) {
-				person_image = res.userInfo.avatarUrl
-				console.log(person_image)
-				console.log("获取成功111", res.userInfo);
-			},
-		});
-	};
+				const userinfo = await uni.getUserProfile({
+					desc: "获取用户信息",
+					success(res) {
+						person_image = res.userInfo.avatarUrl
+						console.log(person_image)
+						console.log("获取成功111", res.userInfo);
+					},
+				});
+			};
 
-	const showDrawer = () => {
-		if (showLeft.value) {
-			showLeft.value.open(); // 调用 抽屉的 open 方法
-		}
-	};
-	const change = (e, type) => {
-		console.log((type === 'showLeft' ? '左窗口' : '右窗口') + (e ? '打开' : '关闭'));
-	}
+			const showDrawer = () => {
+				if (showLeft.value) {
+					showLeft.value.open(); // 调用 抽屉的 open 方法
+				}
+			};
+			const change = (e, type) => {
+				console.log((type === 'showLeft' ? '左窗口' : '右窗口') + (e ? '打开' : '关闭'));
+			}
 
-	const imageList = [ //轮播图路径
-		'/static/banners/banner1.jpg',
-		'/static/banners/banner2.jpg',
-		'/static/banners/banner3.jpg',
-		'/static/banners/banner4.jpg',
-		'/static/banners/banner5.jpg',
-	];
+			const imageList = [ //轮播图路径
+				'/static/banners/banner1.jpg',
+				'/static/banners/banner2.jpg',
+				'/static/banners/banner3.jpg',
+				'/static/banners/banner4.jpg',
+				'/static/banners/banner5.jpg',
+			];
 </script>
 
 <style lang="scss">

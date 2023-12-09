@@ -16,7 +16,46 @@ const _sfc_main = {
     const showLeft = common_vendor.ref(false);
     let person_image = "/static/person/touxiang.png";
     const test = (e) => {
-      console.log(e);
+      new Promise((resolve, reject) => {
+        common_vendor.index.login({
+          provider: "weixin",
+          success: (res) => {
+            resolve(res);
+          }
+        });
+      }).then((login_res) => {
+        common_vendor.index.request({
+          url: "http://localhost:8080/user/login",
+          // 替换成你的后端登录接口地址
+          method: "GET",
+          data: {
+            code: login_res.code
+            // 其他参数根据你的后端需求添加
+          },
+          success: (res) => {
+            if (res.data.msg == "success") {
+              const userInfo = res.data.data;
+              console.log("登录信息：", userInfo);
+              return res;
+            } else {
+              console.error("登录失败：", data.message);
+            }
+          }
+        });
+      }).then((res) => {
+        common_vendor.index.request({
+          url: "http://localhost:8080/user/getPhone",
+          // 替换成你的后端登录接口地址
+          method: "GET",
+          data: {
+            code: e.detail.code
+            // 其他参数根据你的后端需求添加
+          },
+          success(res2) {
+            console.log(res2);
+          }
+        });
+      });
     };
     const showDrawer = () => {
       if (showLeft.value) {
